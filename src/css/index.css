@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+}
+
+.margen {
+    margin: 100px;
+}
+
+.tabla {
+    width: 100%;
+    text-align: left;
+}
+
+.tabla td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#menu {
+    background-color: #253A46;
+    padding: 20px;
+    font-size: 20px;
+}
+
+#menu a {
+    color: aliceblue;
+    padding-right: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.rojo {
+    background-color: red;
+    color: antiquewhite;
+}
