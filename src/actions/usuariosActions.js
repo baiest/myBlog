@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { USUARIO_TYPES } from '../types/usuariosTypes'
+
 export const traerTodos = () => async(dispatch) => {
     dispatch({
         type: USUARIO_TYPES.cargando

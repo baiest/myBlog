@@ -6,10 +6,10 @@ const INITIAL_STATE = {
     error: ''
 }
 
-export default (state = INITIAL_STATE, action) => {
+const usuariosReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case USUARIO_TYPES.traer_todos:
-            return {...state, usuarios: action.payload, cargando: false }
+            return {...state, usuarios: action.payload, cargando: false, error: '' }
         case USUARIO_TYPES.cargando:
             return {...state, cargando: true }
         case USUARIO_TYPES.error:
@@ -18,3 +18,5 @@ export default (state = INITIAL_STATE, action) => {
             return state
     }
 }
+
+export default usuariosReducer;

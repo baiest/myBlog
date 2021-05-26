@@ -35,3 +35,7 @@ body {
     background-color: red;
     color: antiquewhite;
 }
+
+.pub_title {
+    border-top: 1px solid #253A46
+}
