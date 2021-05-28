@@ -29,13 +29,17 @@ export const traerPorUsuario = (key) => async(dispatch, getState) => {
 
         const response = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${usuario_id}`)
 
+        response.data.map(publicacion => ({...publicacion,
+            comentarios: [],
+            abierto: false
+        }));
         const publicaciones_actualizadas = [
             ...publicaciones,
             response.data
         ];
 
         dispatch({
-            type: PUBLICACIONES_TYPES.traer_por_usuario,
+            type: PUBLICACIONES_TYPES.actualizar,
             payload: publicaciones_actualizadas
         })
 
@@ -55,6 +59,60 @@ export const traerPorUsuario = (key) => async(dispatch, getState) => {
         dispatch({
             type: PUBLICACIONES_TYPES.error,
             payload: error.message
+        })
+    }
+}
+
+export const abrirCerrar = (pub_key, com_key) => (dispatch, getState) => {
+    const { publicaciones } = getState().publicacionesReducer;
+    const seleccionada = publicaciones[pub_key][com_key];
+
+    const actualizada = {
+        ...seleccionada,
+        abierto: !seleccionada.abierto
+    };
+    const publicaciones_actualizadas = [...publicaciones];
+    publicaciones_actualizadas[pub_key] = [
+        ...publicaciones[pub_key]
+    ];
+
+    publicaciones_actualizadas[pub_key][com_key] = actualizada;
+
+    dispatch({
+        type: PUBLICACIONES_TYPES.actualizar,
+        payload: publicaciones_actualizadas
+    })
+}
+
+export const traerComentarios = (pub_key, com_key) => async(dispatch, getState) => {
+    const { publicaciones } = getState().publicacionesReducer;
+    const seleccionada = publicaciones[pub_key][com_key];
+
+    dispatch({
+        type: PUBLICACIONES_TYPES.com_cargando
+    })
+
+    try {
+        const response = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${seleccionada.id}`)
+        const actualizada = {
+            ...seleccionada,
+            comentarios: response.data
+        };
+
+        const publicaciones_actualizadas = [...publicaciones];
+        publicaciones_actualizadas[pub_key] = [
+            ...publicaciones[pub_key]
+        ];
+
+        publicaciones_actualizadas[pub_key][com_key] = actualizada;
+        dispatch({
+            type: PUBLICACIONES_TYPES.com_actualizar,
+            payload: publicaciones_actualizadas
+        })
+    } catch (error) {
+        dispatch({
+            type: PUBLICACIONES_TYPES.com_error,
+            payload: `Error en los comentarios: ${error}`
         })
     }
 }

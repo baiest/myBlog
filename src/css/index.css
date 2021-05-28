@@ -37,5 +37,12 @@ body {
 }
 
 .pub_title {
-    border-top: 1px solid #253A46
+    border-top: 1px solid #253A46;
+    cursor: pointer;
+}
+
+.contenedor_tareas {
+    font-size: 20px;
+    margin-left: 50px;
+    margin-bottom: 70px;
 }
